@@ -4,35 +4,49 @@
 #include <time.h>
 #include <math.h>
 
-#define INF 1000000
-#define EPS 0.0001
+#define INF 1000000 // "infinity" distance  used to initialize min_dist array
 
+// if centroids norm doesn't change more than threshold EPS
+// exit the main while loop/end the computation
+#define EPS 0.0001 
+
+// n - number of samples/data points
+// d - dimensionality of one data point
+// k - number of centroids to identify
 int n, d, k;
 
-
+// sample an uniform integer in the interval [a, b]
 int sample_int(int a, int b)
 {
     return a + (rand() % (b - a));
 }
 
+// sample an uniform float in the interval [a, b]
 float sample_float(float a, float b)
 {
     float u = (float)rand() / RAND_MAX;
     return (b - a) * u + a;
 }
 
+// compute Euclidean distance/ L2 norm between points a and b
+// of dimensionality d
 float dist(float *a, float *b, int d)
 {
     float res = 0.0;
     int i;
+    float x;
     for(i = 0; i < d; i++){
-        res += (*a - *b) * (*a - *b);
+        x = *a - *b;
+        res += x * x;
         a++;
         b++; 
     }
     return res;
 }
 
+// given the mind array (min_dist of one point to any centroid chosen so far)
+// the function selects the next centroid according to a weighted probability
+// distribution (see README for a more detailed description) 
 int choose_next_centroid(float *mind, int n){
     float u = sample_float(0.0, 1.0);
     float s = 0.0;
@@ -45,6 +59,8 @@ int choose_next_centroid(float *mind, int n){
     return -1;
 }
 
+// if the current centroids don't differ that much from the previous
+// centroids, return 1 (i.e. end the main algorithm)
 int stop_condition(float *c, float *prevc, int d, int k)
 {
     int i, j;
@@ -61,6 +77,8 @@ int stop_condition(float *c, float *prevc, int d, int k)
     return (total <= EPS);
 }
 
+// find, for each datapoint, which cluster it belongs to
+// find the closest centroid
 void compute_min_idx(float *min_dist, int *min_idx, float *x, float *centroids){
     int i, j;
     float distance;
@@ -77,6 +95,11 @@ void compute_min_idx(float *min_dist, int *min_idx, float *x, float *centroids){
     }
 }
 
+// the new centroids set is computed
+// the i-th centroid is the average of the datapoints assigned to
+// i-th cluster (min_idx == i)
+// if one centroid did not have at least one point assigned to it,
+// resample from the available points
 void update_centroids(float *x, float *centroids, int *min_idx)
 {
     int i, j, ii, cnt, idx;
@@ -111,6 +134,7 @@ int main(int argc, char *argv[])
     FILE *fin;
     fin = fopen(argv[1], "r");
     fscanf(fin, "%d %d", &n, &d);
+
     float *x, *centroids, *prev_centroids, *min_dist;
     int *min_idx;
     
@@ -127,16 +151,13 @@ int main(int argc, char *argv[])
         }
     }
 
-    clock_t interval;
-    interval = clock();
-
-//init first
+// init first centroid
     idx = sample_int(0, n);
     memcpy(&centroids[0], &x[d * idx], d * sizeof(float));
     memset(min_dist, INF, n * sizeof(float));
     min_dist[idx] = 0.0;
 
-//choose in k-means++ style rest of initial k-1 centroids
+// choose in k-means++ style rest of initial k-1 centroids
     for(i = 1; i < k; i++){
         for(j = 0; j < n; j++){
             distance = dist(&x[d*j], &centroids[d*(i-1)], d);
@@ -166,13 +187,10 @@ int main(int argc, char *argv[])
         if(stop_condition(centroids, prev_centroids, d, k))
             break;
     }
-    interval = clock() - interval;
-    double elapsed_time = ((double)interval) / CLOCKS_PER_SEC;
-    printf("Time: %.3f \n", elapsed_time);
     
-    for(i = 0; i<d*k;i++){
+    for(i = 0; i < d * k; i++){
         printf("%.2f ", centroids[i]);
-        if((i > 0) && (i % d == (d-1)))
+        if((i > 0) && (i % d == (d - 1)))
             printf("\n");
     }
 
