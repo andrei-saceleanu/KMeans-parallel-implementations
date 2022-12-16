@@ -50,9 +50,9 @@ Din radacina proiectului, se poate realiza:
     - app e un string in multimea {serial, openmp, mpi, pthreads}
     - optiuni de rulare cu make:
 
-        - TEST_NO=<b>N</b> unde N este indicele fisierului de puncte de intrare (e.g. input_data/pointsN.txt), N apartine {1,2,3,4}
-        - NP=<b>NP</b> - numarul de procesoare/thread-uri de utilizat
-        - K =<b>K</b> - numarul de clustere/centroizi de identificat
+        - TEST_NO=<b>N</b> - N este indicele fisierului de puncte de intrare (e.g. input_data/pointsN.txt), N apartine {1,2,3,4}
+        - NP=<b>NP</b> - numarul de procesoare/thread-uri de utilizat(nu e necesar pentru versiunea seriala)
+        - K=<b>K</b> - numarul de clustere/centroizi de identificat
 
 - Stergere: `make clean`
 
