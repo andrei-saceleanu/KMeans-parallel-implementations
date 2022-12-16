@@ -35,6 +35,27 @@ Saceleanu Andrei-Iulian 343C1
 Ouatu Andrei-Catalin
 
 
+## Detalii rulare
+
+Din radacina proiectului, se poate realiza:
+
+- Compilare pentru toate variantele: `make`
+
+- Compilare pentru fiecare varianta in parte: `make app_kmeans`
+
+    - app e un string in multimea {serial, openmp, mpi, pthreads}
+
+- Rulare pentru fiecare varianta in parte: `make run_app` 
+
+    - app e un string in multimea {serial, openmp, mpi, pthreads}
+    - optiuni de rulare cu make:
+
+        - TEST_NO=<b>N</b> unde N este indicele fisierului de puncte de intrare (e.g. input_data/pointsN.txt), N apartine {1,2,3,4}
+        - NP=<b>NP</b> - numarul de procesoare/thread-uri de utilizat
+        - K =<b>K</b> - numarul de clustere/centroizi de identificat
+
+- Stergere: `make clean`
+
 ## Implementare
 
 **Limbaj de programare** : C

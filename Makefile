@@ -3,7 +3,7 @@ CFLAGS = -Wall
 LDFLAGS = -lm
 TEST_NO = 1
 NP = 4
-INPUT_FILE = ../input_data/points$(TEST_NO).txt
+INPUT_FILE = input_data/points$(TEST_NO).txt
 K = 5
 
 build: openmp_kmeans pthreads_kmeans mpi_kmeans
