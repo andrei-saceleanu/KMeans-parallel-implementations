@@ -179,6 +179,7 @@ int main(int argc, char *argv[])
     }
 
 // classic k-means algorithm
+    
     while(1){
         memcpy(prev_centroids, centroids, d * k * sizeof(float));
         compute_min_idx(min_dist, min_idx, x, centroids);
@@ -187,7 +188,6 @@ int main(int argc, char *argv[])
         if(stop_condition(centroids, prev_centroids, d, k))
             break;
     }
-    
     for(i = 0; i < d * k; i++){
         printf("%.2f ", centroids[i]);
         if((i > 0) && (i % d == (d - 1)))
