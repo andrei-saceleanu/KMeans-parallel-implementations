@@ -27,7 +27,7 @@ run_pthreads: pthreads_kmeans
 	./pthreads_kmeans $(INPUT_FILE) $(K) $(NP)
 
 run_mpi: mpi_kmeans
-	mpirun -np $(NP) mpi_kmeans $(INPUT_FILE) $(K)
+	mpirun -np $(NP) ./mpi_kmeans $(INPUT_FILE) $(K)
 
 run_serial: serial_kmeans
 	./serial_kmeans $(INPUT_FILE) $(K)
