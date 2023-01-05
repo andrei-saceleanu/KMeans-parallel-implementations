@@ -43,16 +43,17 @@ Din radacina proiectului, se poate realiza:
 
 - Compilare pentru fiecare varianta in parte: `make app_kmeans`
 
-    - app e un string in multimea {serial, openmp, mpi, pthreads}
+    - app e un string in multimea {serial, openmp, mpi, pthreads, hybrid}
 
 - Rulare pentru fiecare varianta in parte: `make run_app` 
 
-    - app e un string in multimea {serial, openmp, mpi, pthreads}
+    - app e un string in multimea {serial, openmp, mpi, pthreads, hybrid}
     - optiuni de rulare cu make:
 
         - TEST_NO=<b>N</b> - N este indicele fisierului de puncte de intrare (e.g. input_data/pointsN.txt), N apartine {1,2,3,4}
         - NP=<b>NP</b> - numarul de procesoare/thread-uri de utilizat(nu e necesar pentru versiunea seriala)
         - K=<b>K</b> - numarul de clustere/centroizi de identificat
+        - OMP_TH=<b>OMP_TH</b> - numarul de thread-uri pentru fiecare proces in varianta hibrida
 
 - Stergere: `make clean`
 
